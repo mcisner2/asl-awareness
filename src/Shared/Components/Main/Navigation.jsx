@@ -13,7 +13,8 @@ export default function Navigation() {
   const loggedIn = !!checkUser();
 
   return (
-    <nav aria-label="Main" style={{ display: "flex", gap: "16px" }}>
+    <nav aria-label="Main">
+      <span className="brand">ASL Awareness</span>
       <NavLink to="/">Signs</NavLink>
       <NavLink to="/history">History</NavLink>
 
@@ -21,6 +22,7 @@ export default function Navigation() {
           users see the auth menu instead. */}
       {loggedIn ? (
         <>
+          <NavLink to="/quiz">Quiz</NavLink>
           <NavLink to="/home">My Account</NavLink>
           <NavLink to="/profile">Profile</NavLink>
         </>

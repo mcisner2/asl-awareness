@@ -2,7 +2,7 @@
 // Main component that renders the router and all the routes for the application.
 
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import Navigation from "@/Shared/Components/Main/Navigation.jsx";
 import { SignPage } from "./Signs/Components/SignPage.jsx";
 import { HistoryList } from "./History/Components/HistoryList.jsx";
@@ -13,7 +13,16 @@ import AuthLogin from "./Authentication/authLogin.jsx";
 import MainHome from "./protectedRoute/MainHome.jsx";
 import MainGood from "./protectedRoute/MainGood.jsx";
 import ProfilePage from "./Profile/ProfilePage.jsx";
+import { checkUser } from "./Authentication/authService.jsx";
+import QuizDashboard from "./Quiz/QuizDashboard.jsx";
+import QuizPlayer from "./Quiz/QuizPlayer.jsx";
 import ForgotPassword from "./Profile/ForgotPassword.jsx";
+
+// Checked each time the route loads (not once at startup), so it reacts to
+// logging in or out. Logged-out visitors are sent to the login page.
+function RequireUser({ children }) {
+  return checkUser() ? children : <Navigate to="/auth/login" replace />;
+}
 
 export default function Components() {
   const [signs, setSigns] = useState([]);
@@ -44,6 +53,8 @@ export default function Components() {
       <Navigation />
       <Routes>
         <Route path="/" element={signsElement} />
+        <Route path="/quiz" element={<RequireUser><QuizDashboard /></RequireUser>} />
+        <Route path="/quiz/:quizId" element={<RequireUser><QuizPlayer signs={signs} /></RequireUser>} />
         <Route path="/history" element={<HistoryList />} />
         <Route path="/auth" element={<AuthModule />} />
         <Route path="/auth/register" element={<AuthRegister />} />

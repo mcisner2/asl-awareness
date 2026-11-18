@@ -1,0 +1,259 @@
+{
+  "title": "ASL Starter Quiz",
+  "questions": [
+    {
+      "id": 1,
+      "type": "sign-to-letter",
+      "category": "alphabet",
+      "question": "Which letter is this sign?",
+      "signId": "sign-a",
+      "options": [
+        {
+          "value": "correct",
+          "text": "A"
+        },
+        {
+          "value": "wrong1",
+          "text": "B"
+        },
+        {
+          "value": "wrong2",
+          "text": "S"
+        },
+        {
+          "value": "wrong3",
+          "text": "E"
+        }
+      ],
+      "correct_answer": "correct"
+    },
+    {
+      "id": 2,
+      "type": "sign-to-letter",
+      "category": "alphabet",
+      "question": "Which letter is this sign?",
+      "signId": "sign-b",
+      "options": [
+        {
+          "value": "correct",
+          "text": "B"
+        },
+        {
+          "value": "wrong1",
+          "text": "D"
+        },
+        {
+          "value": "wrong2",
+          "text": "F"
+        },
+        {
+          "value": "wrong3",
+          "text": "W"
+        }
+      ],
+      "correct_answer": "correct"
+    },
+    {
+      "id": 3,
+      "type": "letter-to-sign",
+      "category": "alphabet",
+      "question": "Which sign is the letter \"C\"?",
+      "options": [
+        {
+          "value": "correct",
+          "signId": "sign-c"
+        },
+        {
+          "value": "wrong1",
+          "signId": "sign-l"
+        },
+        {
+          "value": "wrong2",
+          "signId": "sign-o"
+        },
+        {
+          "value": "wrong3",
+          "signId": "sign-e"
+        }
+      ],
+      "correct_answer": "correct"
+    },
+    {
+      "id": 4,
+      "type": "sign-to-letter",
+      "category": "alphabet",
+      "question": "Which letter is this sign?",
+      "signId": "sign-l",
+      "options": [
+        {
+          "value": "correct",
+          "text": "L"
+        },
+        {
+          "value": "wrong1",
+          "text": "G"
+        },
+        {
+          "value": "wrong2",
+          "text": "Y"
+        },
+        {
+          "value": "wrong3",
+          "text": "D"
+        }
+      ],
+      "correct_answer": "correct"
+    },
+    {
+      "id": 5,
+      "type": "letter-to-sign",
+      "category": "alphabet",
+      "question": "Which sign is the letter \"Y\"?",
+      "options": [
+        {
+          "value": "correct",
+          "signId": "sign-y"
+        },
+        {
+          "value": "wrong1",
+          "signId": "sign-i"
+        },
+        {
+          "value": "wrong2",
+          "signId": "sign-l"
+        },
+        {
+          "value": "wrong3",
+          "signId": "sign-a"
+        }
+      ],
+      "correct_answer": "correct"
+    },
+    {
+      "id": 6,
+      "type": "sign-to-letter",
+      "category": "alphabet",
+      "question": "Watch the motion. Which letter is this sign?",
+      "signId": "sign-j",
+      "options": [
+        {
+          "value": "correct",
+          "text": "J"
+        },
+        {
+          "value": "wrong1",
+          "text": "I"
+        },
+        {
+          "value": "wrong2",
+          "text": "Z"
+        },
+        {
+          "value": "wrong3",
+          "text": "L"
+        }
+      ],
+      "correct_answer": "correct"
+    },
+    {
+      "id": 7,
+      "type": "letter-to-sign",
+      "category": "alphabet",
+      "question": "Which sign is the letter \"Z\"?",
+      "options": [
+        {
+          "value": "correct",
+          "signId": "sign-z"
+        },
+        {
+          "value": "wrong1",
+          "signId": "sign-j"
+        },
+        {
+          "value": "wrong2",
+          "signId": "sign-i"
+        },
+        {
+          "value": "wrong3",
+          "signId": "sign-d"
+        }
+      ],
+      "correct_answer": "correct"
+    },
+    {
+      "id": 8,
+      "type": "radio",
+      "category": "language",
+      "question": "How many hands does the ASL manual alphabet use for one letter?",
+      "options": [
+        {
+          "value": "correct",
+          "text": "One hand"
+        },
+        {
+          "value": "wrong1",
+          "text": "Two hands"
+        },
+        {
+          "value": "wrong2",
+          "text": "It depends on the word"
+        },
+        {
+          "value": "wrong3",
+          "text": "ASL does not use fingerspelling"
+        }
+      ],
+      "correct_answer": "correct"
+    },
+    {
+      "id": 9,
+      "type": "radio",
+      "category": "language",
+      "question": "Why are the letters J and Z different from most letters in the ASL alphabet?",
+      "options": [
+        {
+          "value": "correct",
+          "text": "They involve movement"
+        },
+        {
+          "value": "wrong1",
+          "text": "They use two hands"
+        },
+        {
+          "value": "wrong2",
+          "text": "They are not part of ASL"
+        },
+        {
+          "value": "wrong3",
+          "text": "They are signed with the face"
+        }
+      ],
+      "correct_answer": "correct"
+    },
+    {
+      "id": 10,
+      "type": "radio",
+      "category": "history",
+      "question": "Which language most strongly influenced the development of ASL?",
+      "options": [
+        {
+          "value": "correct",
+          "text": "French Sign Language"
+        },
+        {
+          "value": "wrong1",
+          "text": "British Sign Language"
+        },
+        {
+          "value": "wrong2",
+          "text": "German Sign Language"
+        },
+        {
+          "value": "wrong3",
+          "text": "Italian Sign Language"
+        }
+      ],
+      "correct_answer": "correct"
+    }
+  ]
+}

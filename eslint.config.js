@@ -18,4 +18,12 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
+  {
+    // Back4App Cloud Code: Node CommonJS, Parse is a global
+    files: ['cloud/**/*.js'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: { ...globals.node, Parse: 'readonly' },
+    },
+  },
 ])
