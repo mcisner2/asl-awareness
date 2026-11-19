@@ -52,7 +52,7 @@ body {
 
 /* keeps content a readable width and centered */
 #root {
-  max-width: 960px;
+  max-width: 1040px;
   margin: 0 auto;
   padding: 0 1rem 3rem;
 }
@@ -79,10 +79,21 @@ a:hover { color: var(--primary-hover); }
 
 /* ---------- navigation ---------- */
 nav[aria-label="Main"] {
+  display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  padding: 0.75rem 0;
-  margin-bottom: 1rem;
+  gap: 0.25rem;
+  padding: 0.9rem 0;
+  margin-bottom: 1.5rem;
   border-bottom: 1px solid var(--border);
+}
+
+nav[aria-label="Main"] .brand {
+  margin-right: auto;
+  padding-right: 1rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--primary);
 }
 
 nav[aria-label="Main"] a {
@@ -144,7 +155,8 @@ button a {
   text-decoration: none;
 }
 
-button:hover {
+button:hover,
+.btn:hover {
   background: var(--primary-hover);
 }
 
@@ -209,3 +221,151 @@ footer {
     transition: none !important;
   }
 }
+
+/* ---------- shared pieces ---------- */
+.muted { color: var(--muted); margin: 0.25rem 0; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+.btn {
+  display: inline-block; font: inherit; cursor: pointer; text-decoration: none;
+  background: var(--primary); color: var(--on-primary);
+  border-radius: 6px; padding: 0.5rem 1rem;
+}
+.btn:hover { color: var(--on-primary); }
+.btn-secondary { background: var(--accent); color: var(--primary); border: 1px solid var(--border); }
+.btn-secondary:hover { background: var(--border); color: var(--primary); }
+.back-link { display: inline-block; margin-top: 0.5rem; text-decoration: none; }
+.page-header h1 { margin-top: 0.5rem; }
+
+/* ---------- animated signs ---------- */
+.animated-sign { margin: 0; text-align: center; }
+.animated-sign button {
+  margin-top: 0.4rem; padding: 0.2rem 0.7rem; font-size: 0.85rem;
+  background: var(--accent); color: var(--primary); border: 1px solid var(--border);
+}
+.animated-sign button:hover { background: var(--border); }
+.sign-frame {
+  position: relative; display: grid; place-items: center; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.sign-frame img, .sign-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+figure canvas.sign-sprite { height: 90%; aspect-ratio: 1; border: 0; border-radius: 0; image-rendering: pixelated; }
+
+/* ---------- quiz dashboard ---------- */
+.dashboard-grid {
+  display: grid; gap: 2rem; align-items: start;
+  grid-template-columns: minmax(0, 3fr) minmax(280px, 2fr);
+}
+@media (max-width: 820px) { .dashboard-grid { grid-template-columns: 1fr; } }
+.dashboard h2 { margin-top: 0; }
+.quiz-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; }
+.quiz-card {
+  position: relative; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  transition: border-color 0.15s, transform 0.15s;
+}
+.quiz-card:hover { border-color: var(--primary); transform: translateY(-1px); }
+.quiz-card.is-new { border-color: var(--primary); box-shadow: 0 0 0 3px var(--accent); }
+.quiz-card-link {
+  display: block; padding: 1rem 1.25rem; text-decoration: none; color: var(--text);
+  border-radius: var(--radius);
+}
+.quiz-card h3 { margin: 0.4rem 0 0.1rem; }
+.quiz-card-cta { display: inline-block; margin-top: 0.5rem; color: var(--primary); font-weight: 600; }
+.badge {
+  display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em;
+  text-transform: uppercase; padding: 0.1rem 0.55rem; border-radius: 999px;
+  background: var(--accent); color: var(--primary);
+}
+.btn-link-danger {
+  position: absolute; top: 0.75rem; right: 0.9rem; padding: 0.1rem 0.4rem;
+  background: transparent; color: var(--danger); font-size: 0.85rem;
+}
+.btn-link-danger:hover { background: transparent; text-decoration: underline; }
+
+/* ---------- quiz player ---------- */
+.quiz-player fieldset { margin: 0 0 1rem; }
+.question-text { font-size: 1.1rem; font-weight: 600; margin: 0.25rem 0 0.75rem; }
+.sign-prompt { display: flex; justify-content: center; margin-bottom: 1rem; }
+.quiz-options { display: grid; gap: 0.5rem; }
+.quiz-option {
+  display: flex; align-items: center; gap: 0.6rem; margin: 0; font-weight: 400; cursor: pointer;
+  border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.9rem; background: var(--bg);
+}
+.quiz-option:hover { border-color: var(--primary); }
+.quiz-option.selected, .sign-choice.selected { border-color: var(--primary); background: var(--accent); }
+.quiz-option.correct, .sign-choice.correct { border-color: #2e7d32; background: rgba(46,125,50,.15); }
+.quiz-option.wrong, .sign-choice.wrong { border-color: var(--danger); background: rgba(179,38,30,.12); }
+.sign-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem; }
+.sign-choice {
+  display: grid; justify-items: center; gap: 0.4rem; margin: 0; padding: 0.6rem; cursor: pointer;
+  border: 2px solid var(--border); border-radius: var(--radius); background: var(--bg);
+}
+.sign-choice:hover { border-color: var(--primary); }
+.sign-choice input { margin: 0; }
+.feedback { margin: 0.25rem 0 0; font-weight: 600; }
+.feedback.ok { color: #2e7d32; }
+.feedback.bad { color: var(--danger); }
+.score-banner {
+  font-size: 1.4rem; font-weight: 700; text-align: center; color: var(--text);
+  background: var(--accent); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem;
+}
+.quiz-actions { display: flex; gap: 0.75rem; align-items: center; margin-top: 1.25rem; }
+
+/* ---------- AI chat panel ---------- */
+.chat-panel {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 1rem 1.25rem;
+  position: sticky; top: 1rem;
+}
+.chat-panel h2 { font-size: 1.2rem; margin: 0 0 0.75rem; }
+.chat-log { display: grid; gap: 0.5rem; max-height: 320px; overflow-y: auto; margin-bottom: 0.75rem; }
+.chat-msg { padding: 0.5rem 0.8rem; border-radius: 12px; background: var(--accent); max-width: 92%; }
+.chat-msg.user { background: var(--primary); color: var(--on-primary); justify-self: end; }
+.chat-msg.error { background: transparent; border: 1px solid var(--danger); color: var(--danger); }
+.chat-ideas { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+.chip {
+  background: var(--bg); color: var(--primary); border: 1px solid var(--border);
+  border-radius: 999px; padding: 0.25rem 0.75rem; font-size: 0.85rem;
+}
+.chip:hover { background: var(--accent); }
+.chat-form { display: flex; gap: 0.5rem; }
+.chat-form input { flex: 1; min-width: 0; }
+
+.credits { font-size: 0.8rem; margin-top: 2rem; }
+
+/* ---------- confirm pop-up ---------- */
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-danger:hover { background: var(--danger); filter: brightness(0.92); }
+.btn-secondary { background: var(--accent); color: var(--primary); border: 1px solid var(--border); }
+.confirm-dialog {
+  width: min(420px, calc(100vw - 2rem)); padding: 1.5rem; margin: auto;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+.confirm-dialog::backdrop { background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(2px); }
+.confirm-dialog h2 { margin: 0 0 0.5rem; font-size: 1.25rem; }
+.confirm-dialog p { margin: 0 0 1.25rem; color: var(--muted); }
+.confirm-actions { display: flex; justify-content: flex-end; gap: 0.6rem; }
+.sign-missing { margin: 0; padding: 0.5rem; text-align: center; font-size: 0.85rem; color: var(--muted); }
+
+/* ---------- J / Z motion path drawn over the photo ---------- */
+.sign-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.sign-overlay path { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 100; }
+.sign-overlay .trail-halo { stroke: rgba(0, 0, 0, 0.65); stroke-width: 8; }
+.sign-overlay .trail { stroke: #ffd400; stroke-width: 4.5; }
+.sign-overlay .trail-halo, .sign-overlay .trail { stroke-dashoffset: 100; animation: trail-draw 2.6s linear infinite; }
+.sign-overlay .trail-dot { fill: #ffd400; stroke: #000; stroke-width: 1.5; }
+/* paused (or reduced motion): show the whole path at once */
+.sign-overlay.is-paused .trail-halo, .sign-overlay.is-paused .trail { animation: none; stroke-dashoffset: 0; }
+@keyframes trail-draw { 0% { stroke-dashoffset: 100; } 75%, 100% { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .sign-overlay .trail-halo, .sign-overlay .trail { animation: none; stroke-dashoffset: 0; }
+}
+
+/* portrait clips (J, Z): show the whole frame instead of cropping the motion */
+.sign-frame.is-portrait { background: #7d7d7d; }
+.sign-frame.is-portrait img, .sign-frame.is-portrait video { object-fit: contain; }

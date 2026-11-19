@@ -17,3 +17,11 @@ Once you create an account, you automatically log into your account. You get the
 
 
 
+
+
+# Feature 6: animated sign quizzes and AI quiz builder
+
+- `/quiz` plays the built-in quiz plus sign questions that use the animated library in `src/Shared/Components/Signs/Library/`.
+- The "Build a quiz with AI" widget (login required) calls the `generateQuiz` Cloud Code function in `cloud/`.
+- To deploy the backend: upload the files in `cloud/` to Back4App > Cloud Functions and set `GEMINI_API_KEY` (and optionally `GEMINI_MODEL`) under Server Settings > Environment Variables. The key must never be committed or exposed to the browser.
+- Test the validator with `node scripts/validate-quiz.test.mjs`.
