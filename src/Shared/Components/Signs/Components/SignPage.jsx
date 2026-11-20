@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
   // convert rgba bytes into a pixelated image
 import { labelToLetter } from "../Services/getData.jsx";
 import { SignImage } from "./SignImage.jsx";
+// NEW: "mark as learned" support (loading and saving live in the Progress folder)
+import { useLearned, signIdForLetter } from "../../Progress/useLearned.jsx";
+import { LearnedToggle } from "../../Progress/LearnedToggle.jsx";
 
 // construct page here with title and signs
 export function SignPage({ title = "ASL Directory", signs = [] }) {
@@ -19,6 +22,9 @@ export function SignPage({ title = "ASL Directory", signs = [] }) {
   const [searchLetter, setSearchLetter] = useState("");
   const [sortOrder, setSortOrder] = useState("ascending");
   const [showCaptions, setShowCaptions] = useState(true);
+
+  // NEW: which signs this user has learned (does nothing when logged out)
+  const { loggedIn, learned, toggle, error } = useLearned();
 
   // Filter the signs down to the ones matching the typed text.
   // Case-insensitive, since .toLowerCase() is used.
@@ -84,15 +90,40 @@ export function SignPage({ title = "ASL Directory", signs = [] }) {
         </label>
       </form>
 
+      {/* NEW: shows a message if loading or saving progress fails */}
+      {error && <p role="alert">{error}</p>}
+
       <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
-        {sortedSigns.map((sign) => (
-          <SignImage
-            key={sign.label}
-            pixels={sign.pixels}
-            letter={labelToLetter(sign.label)}
-            showCaption={showCaptions}
-          />
-        ))}
+        {sortedSigns.map((sign) => {
+          const letter = labelToLetter(sign.label);
+          const signId = signIdForLetter(letter);
+          return (
+            // NEW: each sign sits in a small column so its button goes under it
+            <div
+              key={sign.label}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "4px",
+              }}
+            >
+              <SignImage
+                pixels={sign.pixels}
+                letter={letter}
+                showCaption={showCaptions}
+              />
+              {/* NEW: only logged-in users see the button */}
+              {loggedIn && (
+                <LearnedToggle
+                  signId={signId}
+                  learned={learned.has(signId)}
+                  onToggle={toggle}
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
     </header>
   );
