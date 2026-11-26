@@ -1,6 +1,6 @@
 // authLogin.jsx
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { checkUser, loginUser } from "./authService";
 import AuthForm from "./authForm";
 import { useNavigate } from "react-router-dom";

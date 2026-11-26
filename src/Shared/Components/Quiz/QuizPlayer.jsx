@@ -9,6 +9,11 @@ import { AnimatedSign } from "../Signs/Library/AnimatedSign.jsx";
 import { scoreQuiz, shuffled, signsById } from "./quizEngine.js";
 import { getMyQuiz } from "./quizModel.jsx";
 import Credits from "../Signs/Library/Credits.jsx";
+// NEW: save per-sign results to the user's progress, and build practice quizzes
+import { checkUser } from "../Authentication/authService.jsx";
+import { recordQuizResults } from "../Progress/progressModel.jsx";
+import { signResultsFromQuiz } from "../Progress/progressStats.js";
+import { loadPracticeQuiz } from "../Progress/loadPracticeQuiz.js";
 
 export default function QuizPlayer({ signs = [] }) {
   const { quizId } = useParams();
@@ -17,12 +22,17 @@ export default function QuizPlayer({ signs = [] }) {
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
   const [attempt, setAttempt] = useState(0); // bumps on Retake to reshuffle
+  const [saveNote, setSaveNote] = useState(""); // NEW: shown if saving progress fails
 
   useEffect(() => {
     if (quizId === "starter") return;
-    getMyQuiz(quizId)
+    // NEW: "practice" builds a quiz from the signs this user needs to review
+    const load = quizId === "practice" ? loadPracticeQuiz() : getMyQuiz(quizId);
+    load
       .then(setQuiz)
-      .catch(() => setError("Could not find that quiz."));
+      .catch(() =>
+        setError(quizId === "practice" ? "Could not build a practice quiz." : "Could not find that quiz.")
+      );
   }, [quizId]);
 
   const questions = useMemo(
@@ -60,7 +70,15 @@ export default function QuizPlayer({ signs = [] }) {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          setResult(scoreQuiz(quiz.questions, answers));
+          const scored = scoreQuiz(quiz.questions, answers);
+          setResult(scored);
+          // NEW: logged-in users get per-sign results saved for the progress page.
+          // A failed save never stops the score from showing.
+          if (checkUser()) {
+            recordQuizResults(signResultsFromQuiz(quiz.questions, scored)).catch(() =>
+              setSaveNote("Your score could not be saved to your progress.")
+            );
+          }
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       >
@@ -69,6 +87,7 @@ export default function QuizPlayer({ signs = [] }) {
             You scored {result.score} / {result.total}
           </p>
         )}
+        {saveNote && <p role="alert">{saveNote}</p>}
 
         {questions.map((q, n) => {
           const r = result?.results.find((x) => x.id === q.id);
@@ -138,6 +157,7 @@ export default function QuizPlayer({ signs = [] }) {
                 onClick={() => {
                   setAnswers({});
                   setResult(null);
+                  setSaveNote("");
                   setAttempt((a) => a + 1);
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}

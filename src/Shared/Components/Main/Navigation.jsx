@@ -23,6 +23,8 @@ export default function Navigation() {
       {loggedIn ? (
         <>
           <NavLink to="/quiz">Quiz</NavLink>
+          <NavLink to="/progress">Progress</NavLink>
+          <NavLink to="/meetups">Meet-ups</NavLink>
           <NavLink to="/home">My Account</NavLink>
           <NavLink to="/profile">Profile</NavLink>
         </>

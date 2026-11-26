@@ -17,6 +17,9 @@ import { checkUser } from "./Authentication/authService.jsx";
 import QuizDashboard from "./Quiz/QuizDashboard.jsx";
 import QuizPlayer from "./Quiz/QuizPlayer.jsx";
 import ForgotPassword from "./Profile/ForgotPassword.jsx";
+// NEW: progress analytics page and the meet-ups page (both for logged-in users)
+import ProgressDashboard from "./Progress/ProgressDashboard.jsx";
+import MeetupsPage from "./Meetups/MeetupsPage.jsx";
 
 // Checked each time the route loads (not once at startup), so it reacts to
 // logging in or out. Logged-out visitors are sent to the login page.
@@ -55,6 +58,9 @@ export default function Components() {
         <Route path="/" element={signsElement} />
         <Route path="/quiz" element={<RequireUser><QuizDashboard /></RequireUser>} />
         <Route path="/quiz/:quizId" element={<RequireUser><QuizPlayer signs={signs} /></RequireUser>} />
+        {/* NEW: /quiz/practice is handled by the /quiz/:quizId route above */}
+        <Route path="/progress" element={<RequireUser><ProgressDashboard /></RequireUser>} />
+        <Route path="/meetups" element={<RequireUser><MeetupsPage /></RequireUser>} />
         <Route path="/history" element={<HistoryList />} />
         <Route path="/auth" element={<AuthModule />} />
         <Route path="/auth/register" element={<AuthRegister />} />

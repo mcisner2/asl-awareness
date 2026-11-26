@@ -129,9 +129,11 @@ export default function ProgressDashboard() {
         </>
       )}
 
-      {/* TODO: link to a practice quiz built from pickReviewSigns once the
-          quiz builder accepts a list of sign ids */}
+      {/* /quiz/practice is handled by QuizPlayer: it builds a quiz from the
+          signs you miss most, then signs you have not been asked yet */}
       <p>
+        <Link to="/quiz/practice">Practice these signs</Link>
+        {" | "}
         <Link to="/quiz">Take a quiz</Link>
       </p>
 

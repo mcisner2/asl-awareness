@@ -114,3 +114,39 @@ test("pickReviewSigns ranks a stale in-progress sign above a fresh one", () => {
   };
   assert.deepEqual(pickReviewSigns(stats, ["x", "y"], 2, NOW), ["y", "x"]);
 });
+
+// ---------- signResultsFromQuiz ----------
+import { signResultsFromQuiz } from "./progressStats.js";
+
+test("signResultsFromQuiz maps sign questions, skips text and unanswered ones", () => {
+  const questions = [
+    { id: 1, type: "radio", question: "Text only", options: [], correct_answer: "correct" },
+    { id: 2, type: "sign-to-letter", signId: "sign-a", options: [], correct_answer: "correct" },
+    {
+      id: 3, type: "letter-to-sign", correct_answer: "correct",
+      options: [{ value: "wrong1", signId: "sign-x" }, { value: "correct", signId: "sign-b" }],
+    },
+    { id: 4, type: "sign-to-letter", signId: "sign-c", options: [], correct_answer: "correct" },
+  ];
+  const scored = {
+    results: [
+      { id: 1, chosen: "correct", correct: true },
+      { id: 2, chosen: "wrong1", correct: false },
+      { id: 3, chosen: "correct", correct: true },
+      { id: 4, chosen: null, correct: false }, // left blank
+    ],
+  };
+  assert.deepEqual(signResultsFromQuiz(questions, scored), [
+    { signId: "sign-a", correct: false },
+    { signId: "sign-b", correct: true },
+  ]);
+});
+
+test("pickReviewSigns with jitter still returns n ids and keeps weak signs first", () => {
+  const stats = { a: { seen: 3, correct: 0, streak: 0, lastSeen: NOW.toISOString() } };
+  for (let i = 0; i < 20; i += 1) {
+    const picked = pickReviewSigns(stats, ["a", "b", "c", "d", "e"], 3, NOW, 5);
+    assert.equal(picked.length, 3);
+    assert.equal(picked[0], "a"); // weak always outranks never-seen, jitter or not
+  }
+});

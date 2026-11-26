@@ -1,7 +1,5 @@
 // authForm.jsx
 
-import React from "react";
-
 // define AuthForm component
 const AuthForm = ({ user, isLogin, onChildChange, onSubmit }) => {
   return (

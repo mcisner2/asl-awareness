@@ -161,7 +161,7 @@ export function summarize({
 //   3. signs asked but not mastered (the longer since last seen, the higher)
 //   4. mastered signs, only to fill the quiz
 // A simple spaced-review idea: what you miss or have not seen comes back first.
-export function pickReviewSigns(stats, ids, n = 8, now = new Date()) {
+export function pickReviewSigns(stats, ids, n = 8, now = new Date(), jitter = 0) {
   const scored = ids.map((id) => {
     const stat = stats[id];
     let score;
@@ -175,8 +175,33 @@ export function pickReviewSigns(stats, ids, n = 8, now = new Date()) {
       else if (masteryOf(stat) === "mastered") score = Math.min(days, 20);
       else score = 30 + Math.min(days, 30);
     }
-    return { id, score };
+    // a little randomness so signs in the same tier come up in a different
+    // order each time (it never moves a sign into a different tier)
+    return { id, score: score + (jitter ? Math.random() * jitter : 0) };
   });
   scored.sort((a, b) => b.score - a.score || a.id.localeCompare(b.id));
   return scored.slice(0, n).map((s) => s.id);
+}
+
+// ---------- from a finished quiz to progress ----------
+
+// Turns a scored quiz into [{ signId, correct }] for recordQuizResults.
+//   questions  the quiz's questions
+//   scored     what quizEngine.scoreQuiz returned ({ results: [{ id, chosen, correct }] })
+// Only sign questions count (plain text questions have no sign to track), and
+// unanswered questions are skipped so leaving one blank is not counted as a miss.
+export function signResultsFromQuiz(questions, scored) {
+  const byId = new Map(scored.results.map((r) => [r.id, r]));
+  const out = [];
+  for (const q of questions) {
+    const r = byId.get(q.id);
+    if (!r || r.chosen === null || r.chosen === undefined) continue;
+    let signId = q.signId;
+    // letter-to-sign questions store the sign on the correct option
+    if (!signId && q.type === "letter-to-sign") {
+      signId = q.options?.find((o) => o.value === q.correct_answer)?.signId;
+    }
+    if (signId) out.push({ signId, correct: r.correct });
+  }
+  return out;
 }

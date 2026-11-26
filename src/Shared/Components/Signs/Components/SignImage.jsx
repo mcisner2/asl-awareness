@@ -6,7 +6,7 @@
 // how to use it to generate our ASL images
 // Link: https://developer.mozilla.org/en-US/docs/Web/API/ImageData/data
 
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 // create function to take in pixels and letter label to
 // generate a 28 pixel image

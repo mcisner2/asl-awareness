@@ -9,6 +9,7 @@ const MainHome = () => {
   const [flag, setFlag] = useState(false);
 
   // Asks the auth service whether a user is logged in and stores the answer as true or false
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (checkUser()) {
       console.log("authorized");
@@ -18,6 +19,7 @@ const MainHome = () => {
       setFlag(false);
     }
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // ProtectedRoute forwards to /user when flag is true
   // When the flag is false, it shows "Unauthorized!"
